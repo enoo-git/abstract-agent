@@ -380,7 +380,8 @@ const hash = await walletClient.sendTransaction({
 | Onchain game | `templates/gaming/` | Scores, leaderboards | `test/Leaderboard.test.ts` |
 | Social token | `templates/social-token/` | Token + merkle airdrop | `test/SocialToken.test.ts` |
 | ERC-20 token | `templates/erc20/` | Basic fungible token | `test/MyToken.test.ts` |
-| Frontend | `templates/frontend/` | Next.js + AGW starter | — |
+| Frontend minimal | `templates/frontend/` | Next.js + AGW starter | — |
+| Frontend Tailwind | `templates/frontend-tailwind/` | Next.js 15 + Tailwind 4 + shadcn/ui | — |
 
 ### How to use a template
 

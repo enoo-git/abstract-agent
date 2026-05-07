@@ -43,7 +43,10 @@ echo "  --- Tokens ---"
 echo "  6) ERC-20 Token         (basic fungible token)"
 echo "  7) Social Token         (token + merkle airdrop)"
 echo ""
-read -p "Enter number (1-7): " CHOICE
+echo "  --- Frontend ---"
+echo "  8) Frontend Tailwind    (Next.js 15 + Tailwind 4 + shadcn/ui)"
+echo ""
+read -p "Enter number (1-8): " CHOICE
 
 case $CHOICE in
   1) TEMPLATE="staking" ;;
@@ -53,6 +56,7 @@ case $CHOICE in
   5) TEMPLATE="gaming" ;;
   6) TEMPLATE="erc20" ;;
   7) TEMPLATE="social-token" ;;
+  8) TEMPLATE="frontend-tailwind" ;;
   *) echo "Invalid choice"; exit 1 ;;
 esac
 
