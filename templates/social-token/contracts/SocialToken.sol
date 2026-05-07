@@ -40,7 +40,8 @@ contract SocialToken is ERC20, Ownable {
         require(!hasClaimed[msg.sender], "Already claimed");
         require(totalSupply() + AIRDROP_AMOUNT <= MAX_SUPPLY, "Airdrop exhausted");
 
-        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
+        // StandardMerkleTree uses double-hashing: keccak256(keccak256(abi.encode(value)))
+        bytes32 leaf = keccak256(bytes.concat(keccak256(abi.encode(msg.sender))));
         require(MerkleProof.verify(proof, merkleRoot, leaf), "Not whitelisted");
 
         hasClaimed[msg.sender] = true;

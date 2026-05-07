@@ -50,19 +50,19 @@ describe("Leaderboard", function () {
 
     it("operator can submit a score", async function () {
       await leaderboard.connect(operator).submitScore(player1.address, 1000);
-      expect(await leaderboard.personalBest(player1.address)).to.equal(1000);
+      expect(await leaderboard.personalBest(player1.address)).to.equal(1000n);
     });
 
     it("updates personal best when score is higher", async function () {
       await leaderboard.connect(operator).submitScore(player1.address, 500);
       await leaderboard.connect(operator).submitScore(player1.address, 1500);
-      expect(await leaderboard.personalBest(player1.address)).to.equal(1500);
+      expect(await leaderboard.personalBest(player1.address)).to.equal(1500n);
     });
 
     it("does not update personal best when score is lower", async function () {
       await leaderboard.connect(operator).submitScore(player1.address, 1000);
       await leaderboard.connect(operator).submitScore(player1.address, 200);
-      expect(await leaderboard.personalBest(player1.address)).to.equal(1000);
+      expect(await leaderboard.personalBest(player1.address)).to.equal(1000n);
     });
 
     it("non-operator cannot submit score", async function () {

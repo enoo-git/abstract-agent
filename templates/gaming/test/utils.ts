@@ -26,6 +26,11 @@ export function getWallet(privateKey: string): Wallet {
   return new Wallet(privateKey, provider);
 }
 
+// Convert BigInt args to strings to avoid JSON serialization errors in deployment saver
+function serializeArgs(args: unknown[]): unknown[] {
+  return args.map(arg => (typeof arg === "bigint" ? arg.toString() : arg));
+}
+
 export async function deployContract(
   contractName: string,
   constructorArgs: unknown[],
@@ -33,5 +38,5 @@ export async function deployContract(
 ): Promise<Contract> {
   const deployer = new Deployer(hre, options.wallet);
   const artifact = await deployer.loadArtifact(contractName);
-  return deployer.deploy(artifact, constructorArgs);
+  return deployer.deploy(artifact, serializeArgs(constructorArgs));
 }

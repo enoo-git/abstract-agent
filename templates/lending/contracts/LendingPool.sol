@@ -117,7 +117,8 @@ contract LendingPool is Ownable, ReentrancyGuard {
         pos.borrowed = 0;
         pos.borrowTimestamp = 0;
 
-        payable(msg.sender).transfer(collateral);
+        (bool success, ) = payable(msg.sender).call{value: collateral}("");
+        require(success, "ETH transfer failed");
         emit Repaid(msg.sender, pos.borrowed, interest);
     }
 
@@ -139,7 +140,8 @@ contract LendingPool is Ownable, ReentrancyGuard {
         pos.borrowTimestamp = 0;
 
         // Liquidator receives the collateral as reward
-        payable(msg.sender).transfer(collateral);
+        (bool success, ) = payable(msg.sender).call{value: collateral}("");
+        require(success, "ETH transfer failed");
         emit Liquidated(borrower, msg.sender, collateral);
     }
 

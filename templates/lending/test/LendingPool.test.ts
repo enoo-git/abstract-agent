@@ -88,7 +88,7 @@ describe("LendingPool", function () {
       expect(ethAfter).to.be.gt(ethBefore); // got collateral back
 
       const pos = await pool.positions(borrower.address);
-      expect(pos.borrowed).to.equal(0);
+      expect(pos.borrowed).to.equal(0n);
     });
   });
 
@@ -103,7 +103,7 @@ describe("LendingPool", function () {
       await pool.connect(borrower).borrow(ethers.parseEther("1000"));
       // $2000 collateral / $1000 debt = 200% ratio
       const ratio = await pool.getCollateralRatio(borrower.address);
-      expect(ratio).to.equal(200);
+      expect(ratio).to.equal(200n);
     });
   });
 });

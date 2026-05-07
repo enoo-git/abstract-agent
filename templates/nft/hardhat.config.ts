@@ -1,13 +1,19 @@
 import { HardhatUserConfig, vars } from "hardhat/config";
 import "@matterlabs/hardhat-zksync";
+import "@nomicfoundation/hardhat-chai-matchers";
 
 const config: HardhatUserConfig = {
   zksolc: {
-    version: "latest",
-    settings: {},
+    version: "1.5.16",
+    settings: { codegen: "evmla" },
   },
   defaultNetwork: "abstractTestnet",
   networks: {
+    inMemoryNode: {
+      url: "http://127.0.0.1:8011",
+      ethNetwork: "localhost",
+      zksync: true,
+    },
     abstractTestnet: {
       url: "https://api.testnet.abs.xyz",
       ethNetwork: "sepolia",

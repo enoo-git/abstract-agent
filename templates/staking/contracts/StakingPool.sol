@@ -62,7 +62,7 @@ contract StakingPool is Ownable, ReentrancyGuard {
         emit Staked(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) external nonReentrant updateReward(msg.sender) {
+    function withdraw(uint256 amount) public nonReentrant updateReward(msg.sender) {
         require(amount > 0, "Cannot withdraw 0");
         require(stakedBalance[msg.sender] >= amount, "Insufficient staked balance");
         totalStaked -= amount;
@@ -71,7 +71,7 @@ contract StakingPool is Ownable, ReentrancyGuard {
         emit Withdrawn(msg.sender, amount);
     }
 
-    function claimReward() external nonReentrant updateReward(msg.sender) {
+    function claimReward() public nonReentrant updateReward(msg.sender) {
         uint256 reward = rewards[msg.sender];
         require(reward > 0, "No rewards to claim");
         rewards[msg.sender] = 0;

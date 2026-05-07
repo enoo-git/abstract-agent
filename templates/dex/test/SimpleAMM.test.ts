@@ -47,7 +47,7 @@ describe("SimpleAMM", function () {
 
     it("issues LP tokens to provider", async function () {
       const lp = await amm.balanceOf(owner.address);
-      expect(lp).to.be.gt(0);
+      expect(lp).to.be.gt(0n);
     });
 
     it("allows removing liquidity", async function () {

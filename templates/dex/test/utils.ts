@@ -1,4 +1,3 @@
-import { ethers } from "hardhat";
 import { Provider, Wallet, Contract } from "zksync-ethers";
 import { Deployer } from "@matterlabs/hardhat-zksync";
 import hre from "hardhat";
@@ -16,11 +15,20 @@ export const LOCAL_RICH_WALLETS = [
     address: "0x0D43eB5B8a47bA8900d84AA36656c92024e9772e",
     privateKey: "0xd293c684d884d56f8d6abd64fc76757d3664904e309a0645baf8522ab6366d9e",
   },
+  {
+    address: "0xA13c10C0D5bd6f79041B9835c63f91de35A15883",
+    privateKey: "0x850683b40d4a740aa6e745f889a6fdc8327be76e122f5aba645a5b02d0248db8",
+  },
 ];
 
 export function getWallet(privateKey: string): Wallet {
   const provider = new Provider("http://127.0.0.1:8011");
   return new Wallet(privateKey, provider);
+}
+
+// Convert BigInt args to strings to avoid JSON serialization errors in deployment saver
+function serializeArgs(args: unknown[]): unknown[] {
+  return args.map(arg => (typeof arg === "bigint" ? arg.toString() : arg));
 }
 
 export async function deployContract(
@@ -30,5 +38,5 @@ export async function deployContract(
 ): Promise<Contract> {
   const deployer = new Deployer(hre, options.wallet);
   const artifact = await deployer.loadArtifact(contractName);
-  return deployer.deploy(artifact, constructorArgs);
+  return deployer.deploy(artifact, serializeArgs(constructorArgs));
 }

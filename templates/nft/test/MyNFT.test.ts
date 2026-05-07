@@ -48,7 +48,7 @@ describe("MyNFT", function () {
     it("non-owner cannot toggle sale", async function () {
       await expect(
         nft.connect(user).toggleSale()
-      ).to.be.revertedWithCustomError(nft, "OwnableUnauthorizedAccount");
+      ).to.be.revertedWith("Ownable: caller is not the owner");
     });
   });
 
@@ -111,7 +111,7 @@ describe("MyNFT", function () {
     it("non-owner cannot withdraw", async function () {
       await expect(
         nft.connect(user).withdraw()
-      ).to.be.revertedWithCustomError(nft, "OwnableUnauthorizedAccount");
+      ).to.be.revertedWith("Ownable: caller is not the owner");
     });
   });
 });

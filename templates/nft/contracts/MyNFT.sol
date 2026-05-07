@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+// Using OpenZeppelin v4 for zksolc compatibility (v5 uses mcopy opcode not yet supported)
 
 contract MyNFT is ERC721, Ownable {
     uint256 public constant MAX_SUPPLY = 1000;
@@ -18,7 +19,7 @@ contract MyNFT is ERC721, Ownable {
         string memory name,
         string memory symbol,
         string memory baseURI
-    ) ERC721(name, symbol) Ownable(msg.sender) {
+    ) ERC721(name, symbol) {
         _baseTokenURI = baseURI;
     }
 

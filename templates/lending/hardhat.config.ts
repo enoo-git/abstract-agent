@@ -1,10 +1,19 @@
 import { HardhatUserConfig, vars } from "hardhat/config";
 import "@matterlabs/hardhat-zksync";
+import "@nomicfoundation/hardhat-chai-matchers";
 
 const config: HardhatUserConfig = {
-  zksolc: { version: "latest", settings: {} },
+  zksolc: {
+    version: "1.5.16",
+    settings: { codegen: "evmla" },
+  },
   defaultNetwork: "abstractTestnet",
   networks: {
+    inMemoryNode: {
+      url: "http://127.0.0.1:8011",
+      ethNetwork: "localhost",
+      zksync: true,
+    },
     abstractTestnet: {
       url: "https://api.testnet.abs.xyz",
       ethNetwork: "sepolia",
@@ -26,11 +35,27 @@ const config: HardhatUserConfig = {
       abstractMainnet: "IEYKU3EEM5XCD76N7Y7HF9HG7M9ARZ2H4A",
     },
     customChains: [
-      { network: "abstractTestnet", chainId: 11124, urls: { apiURL: "https://api-sepolia.abscan.org/api", browserURL: "https://sepolia.abscan.org/" } },
-      { network: "abstractMainnet", chainId: 2741, urls: { apiURL: "https://api.abscan.org/api", browserURL: "https://abscan.org/" } },
+      {
+        network: "abstractTestnet",
+        chainId: 11124,
+        urls: {
+          apiURL: "https://api-sepolia.abscan.org/api",
+          browserURL: "https://sepolia.abscan.org/",
+        },
+      },
+      {
+        network: "abstractMainnet",
+        chainId: 2741,
+        urls: {
+          apiURL: "https://api.abscan.org/api",
+          browserURL: "https://abscan.org/",
+        },
+      },
     ],
   },
-  solidity: { version: "0.8.24" },
+  solidity: {
+    version: "0.8.24",
+  },
 };
 
 export default config;
