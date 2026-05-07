@@ -1,8 +1,12 @@
 node_modules/
 dist/
 artifacts/
+artifacts-zk/
 cache/
 cache-zk/
+deployments-zk/
+*.log
 .env
 .env.local
 typechain-types/
+.claude/
