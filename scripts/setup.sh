@@ -8,7 +8,7 @@ echo "=================================="
 # Check Node.js
 if ! command -v node &> /dev/null; then
   echo "ERROR: Node.js is not installed."
-  echo "Install it from https://nodejs.org (v18 or higher required)"
+  echo "Install it from https://nodejs.org (v22 recommended)"
   exit 1
 fi
 
@@ -18,22 +18,41 @@ if [ "$NODE_VERSION" -lt 18 ]; then
   exit 1
 fi
 
+if [ "$NODE_VERSION" -ge 24 ]; then
+  echo "WARNING: Node.js v24+ has a known issue with the zksolc compiler download."
+  echo "         Recommended: switch to Node.js v22 (e.g. via nvm: nvm use 22)"
+  echo ""
+fi
+
 echo "Node.js: $(node -v) ✓"
 
 # Pick a template
 echo ""
 echo "Which template do you want to use?"
-echo "  1) ERC-20 Token"
-echo "  2) NFT Collection"
-echo "  3) Onchain Game / Leaderboard"
-echo "  4) Social Token + Airdrop"
-read -p "Enter number (1-4): " CHOICE
+echo ""
+echo "  --- DeFi ---"
+echo "  1) Staking Pool         (stake tokens, earn rewards)"
+echo "  2) DEX / AMM            (token swaps, liquidity pools)"
+echo "  3) Lending Protocol     (collateral, borrow, liquidate)"
+echo ""
+echo "  --- NFT & Gaming ---"
+echo "  4) NFT Collection       (mint, sale, metadata)"
+echo "  5) Onchain Game         (scores, leaderboard)"
+echo ""
+echo "  --- Tokens ---"
+echo "  6) ERC-20 Token         (basic fungible token)"
+echo "  7) Social Token         (token + merkle airdrop)"
+echo ""
+read -p "Enter number (1-7): " CHOICE
 
 case $CHOICE in
-  1) TEMPLATE="erc20" ;;
-  2) TEMPLATE="nft" ;;
-  3) TEMPLATE="gaming" ;;
-  4) TEMPLATE="social-token" ;;
+  1) TEMPLATE="staking" ;;
+  2) TEMPLATE="dex" ;;
+  3) TEMPLATE="lending" ;;
+  4) TEMPLATE="nft" ;;
+  5) TEMPLATE="gaming" ;;
+  6) TEMPLATE="erc20" ;;
+  7) TEMPLATE="social-token" ;;
   *) echo "Invalid choice"; exit 1 ;;
 esac
 
@@ -66,9 +85,13 @@ echo "     - Bridge to Abstract: https://portal.testnet.abs.xyz"
 echo ""
 echo "  2. Edit the contract in contracts/"
 echo ""
-echo "  3. Compile:  npm run compile"
-echo "  4. Deploy:   npm run deploy:testnet"
+echo "  3. Run tests (requires local node):"
+echo "     npx hardhat node-zksync --port 8011 &"
+echo "     npx hardhat test --network inMemoryNode"
 echo ""
-echo "  5. View your contract:"
+echo "  4. Compile:  npm run compile"
+echo "  5. Deploy:   npm run deploy:testnet"
+echo ""
+echo "  6. View your contract:"
 echo "     https://explorer.testnet.abs.xyz"
 echo "=================================="
